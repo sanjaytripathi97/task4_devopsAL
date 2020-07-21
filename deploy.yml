@@ -1,0 +1,37 @@
+#assembly line 16
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: roll-deploy
+spec:
+  selector:
+    matchLabels:
+      env: testing
+
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        env: testing
+
+    spec:
+      containers:
+      - name: mycloud-image
+        image: sanjay874/webserver:v1
+        ports:
+        - containerPort: 80
+---
+
+apiVersion : v1
+kind : Service
+metadata :
+  name : roll-deploy
+spec:
+  selector :
+    env : testing
+  type: NodePort
+  ports :
+   - port: 80
+     targetPort: 80
+     nodePort: 30001
+          
